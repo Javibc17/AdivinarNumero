@@ -16,6 +16,27 @@ h1 {
     text-align: center;
     color: #333;
 }
+
+h3{
+    text-align: center;
+    color: #333;
+}
+
+.caja{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#intentos{
+    display: flex;
+    align-items: flex-start;
+}
+
+#record{
+    display: flex;
+    align-items: flex-end;
+}
+
 .form-group {
     margin-bottom: 15px;
 }
