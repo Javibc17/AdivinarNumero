@@ -8,50 +8,125 @@
 </head>
 <body>
     <div class="container">
-        <h1>ADIVINA EL NÚMERO</h1>
+        <h1>ADIVINA EL NÚMERO <span id="modoSpan">Facil</span></h1>
         <form>
             <div class="form-group">
-                <label for="dificultad">Selecciona la Dificultad:</label>
+                <label for="dificultad"></label>
                 <select id="dificultad" name="dificultad">
-                    <option value="facil" id="facil">Fácil</option>
+                    <option value="" disabled selected>Selecciona una dificultad</option>
+                    <option value="facil" id="facil"  >Fácil</option>
                     <option value="medio" id="medio">Medio</option>
                     <option value="dificil" id="dificil">Difícil</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div >
                 <label for="numero">Introduce tu Numero:</label>
-                <input type="text" id="numero" placeholder="Escribe tu numero aquí">
+                <input type="text" id="numero" name="numero" placeholder="Escribe tu numero aquí">
+
+                <button type="submit">Enviar</button>
             </div>
-            <button type="submit" id="enviar">Enviar</button>
+            
+            <div>
+                <h3 id="mensaje">Has Acertado!!</h3>
 
-            <h3 id="victoria">Has Acertado!!</h3>
+                <h3 id="intentos">Intentos: <span id="intentosSpan"></span></h3>
 
-            <h3 id="intentos">Intentos:5</h3>
+                <h3 id="intentosAgotados">Has agotado tus intentos</h3>
 
-            <h3 id="intentosAgotados">Has agotado tus intentos</h3>
+                <h3 id="record">3</h3>
 
-            <h3 id="record">3</h3>
-
-            <button id="reiniciar">Reiniciar Juego</button>
+                <button id="reiniciar">Reiniciar Juego</button>
+            </div>
         </form>
     </div>
 
     <script>
 
-        const btnFacil = document.getElementById("facil")
-        const btnMedio = document.getElementById("medio")
-        const btnDificil = document.getElementById("dificil")
+        const btnDificultad = document.querySelector("select")
 
+        const span = document.querySelector("span")
 
         const numero = document.getElementById("numero")
         const btnEnviar = document.getElementById("enviar")
 
-        const msjExito = document.getElementById("victoria")
+        const mensaje = document.getElementById("mensaje")
         const nIntentos = document.getElementById("intentos")
         const agotIntentos = document.getElementById("intentosAgotados")
 
         const record = document.getElementById("record")
         const reiniciar = document.getElementById("reiniciar")
+
+        let numAleatorio 
+
+        btnDificultad.addEventListener("change", (event)=> {
+            
+            const modoSeleccionado = event.target.value
+            console.log(modoSeleccionado);
+            
+            
+            
+            switch (modoSeleccionado) {
+                case "facil":
+                    modoSpan.innerText = "Facil"
+
+
+                    intentosSpan.innerText = "5"
+
+                    numAleatorio = Math.floor(Math.random() * 10) + 1
+                    break;
+
+                case "medio":
+                    modoSpan.innerText = "Medio"
+
+
+                    intentosSpan.innerText = "7"
+
+                    numAleatorio = Math.floor(Math.random() * 50) + 1
+                    break;
+
+                case "dificil":
+                    modoSpan.innerText = "Dificil"
+
+                    intentosSpan.innerText = "10"
+
+
+                    numAleatorio = Math.floor(Math.random() * 100) + 1
+                    break;
+            
+                default:
+                    break;
+            }
+
+            console.log(numAleatorio);
+            
+            mensaje.innerText = ""
+            
+        })
+        
+
+        document.querySelector("form").addEventListener("submit", (event)=> {
+            event.preventDefault()
+
+            const numeroPrueba = document.querySelector("input") 
+
+            if (/^[0-9]+$/.test(numeroPrueba.value)) {
+
+                const numUsuario = parseInt(numeroPrueba.value , 10)
+                
+                if (numUsuario > numAleatorio) {
+                    mensaje.innerText = `El numero ${numUsuario} es mas alto`
+                }else if (numUsuario < numAleatorio) {
+                    mensaje.innerText = "El numero es mas bajo"
+                }
+
+
+            }else{
+                mensaje.innerText = "El formato no es valido"
+            }
+
+            
+            
+        })
 
 
     </script>
